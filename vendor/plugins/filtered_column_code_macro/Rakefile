@@ -1,6 +1,7 @@
-# Run this rake file by navigating to the 'vendor/plugins/filtered_column_code_macro'
-# directory on the command line and run "rake" to generate a new 'default_coderay.css'
-# or by running "rake test" to execute the unit tests.
+# Run this rake file by navigating to the
+# 'vendor/plugins/filtered_column_code_macro' directory on the command line
+# and run "rake" to generate a new 'default_coderay.css' or by running
+# "rake test" to execute the unit tests.
 require 'rake'
 require 'rake/testtask'
 require 'pathname'
