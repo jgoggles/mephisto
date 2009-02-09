@@ -1,0 +1,30 @@
+/*
+	CSS for <macro:code lang="ruby">
+
+	This css will provide horizontally scrolling code listings.  This means
+	that the code listings will no longer have to have a fixed width.  It
+	can now dynamically flow with the width of your layout.  It is a bit 
+	touchy on IE6 due to a bug when trying to mix a <div> styled with 
+	overflow:auto with a nested <table>.
+*/
+
+div.CodeMacro {
+    width: 100%; /* required for IE6 horizontal scroll */
+    overflow-x: auto;
+    border: 1px solid silver;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+div.CodeMacro .CodeRay {
+    border-style: none;
+    padding: 0;
+}
+
+div.CodeMacro table.CodeRay {
+    display: inline-block; /* required for IE6 horizontal scroll */
+}
+
+div.CodeMacro table.CodeRay tbody {
+	background-color: #f8f8f8;	/* fix background to fill width of code */
+}

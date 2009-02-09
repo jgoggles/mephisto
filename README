@@ -26,6 +26,30 @@ environment, run:
 
   RAILS_ENV=production rake gems:install
 
+= Syntax Coloring for code listings
+
+Syntax coloring can be performed on code listings that occur in your articles
+by surrounding them with <macro:code lang="ruby">...</macro:code> tags.  
+However, for this to work, your theme must provide CodeRay css styles.  If 
+you use the <macro:code> tags and don't see syntax coloring then the CodeRay
+styles may be added to your current theme by customizing the theme as follows:
+
+1.  Login to Admin (http://localhost:3000/admin) 
+2.  Select 'Design' tab
+3.  Click 'layout.liquid' in the list of templates in the right margin
+4.  In the textfield, scroll to the bottom of the {% head %}...{% endhead %}
+    section and insert the following 2 stylesheet link tags:
+
+<link rel="stylesheet" href="/plugin_assets/filtered_column_code_macro/default_codemacro.css" type="text/css" media="screen" charset="utf-8">
+<link rel="stylesheet" href="/plugin_assets/filtered_column_code_macro/default_coderay.css" type="text/css" media="screen" charset="utf-8">
+
+These stylesheets will not only add syntax coloring - but also wrap the code 
+listings with a div that will automatically add a horizontal scrollbar and 
+dynamically adjust the width of the code listing to fit your layout.  You may 
+want to update existing themes which already support syntax coloring to use 
+these new default stylesheets since existing themes usually only display code
+listings using a static width.
+
 = License
 
 Mephisto is distributed under the same license as Ruby on Rails. See

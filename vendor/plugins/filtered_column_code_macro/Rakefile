@@ -1,0 +1,36 @@
+# Run this rake file by navigating to the 'vendor/plugins/filtered_column_code_macro'
+# directory on the command line and run "rake" to generate a new 'default_coderay.css'
+# or by running "rake test" to execute the unit tests.
+require 'rake'
+require 'rake/testtask'
+require 'pathname'
+
+# require the coderay gem in the vendor/gems dir 
+# (not dependent on globally installed coderay gem)
+$: << Pathname.glob(Pathname(__FILE__).parent.parent.parent + 'gems' + 'coderay*' + 'lib').to_s
+require 'coderay'
+
+desc 'Default: generate default_coderay.css'
+task :default => :generate_default_coderay_stylesheet
+
+# This task is useful to generate a new default CodeRay stylesheet after 
+# updating the coderay gem in 'vendor/gems' to insure that the 
+# 'default_coderay.css' stylesheet is compatible with the updated gem.
+# Be sure to regression test the css in an assortment of browsers after
+# generating a new coderay stylesheet since the 'default_codemacro.css'
+# stylesheet over-rides some of the CodeRay styles.  Note that it is
+# very unlikely that a change to the default CodeRay stylesheet would 
+# probably not be big enough to cause any problems.
+desc 'Generate default_coderay.css'
+task :generate_default_coderay_stylesheet do
+  File.open(File.join(File.dirname(__FILE__), 'assets', 'default_coderay.css'), "wb") do |file|
+		file.write(CodeRay::Encoders[:html]::CSS.new.stylesheet)
+	end
+end
+
+desc 'Test the code_macro plugin.'
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+end

@@ -23,18 +23,20 @@ class CodeMacro < FilteredColumn::Macros::Base
     options[:line_number_start] = attributes[:line_number_start].to_i unless attributes[:line_number_start].blank?
 
     inner_text = inner_text.gsub(/\A\r?\n/, '').chomp
-
+    html = ""
+    
     begin
-      CodeRay.scan(inner_text, lang.to_sym).html(options)
+      html = CodeRay.scan(inner_text, lang.to_sym).html(options)
     rescue ArgumentError
-      CodeRay.scan(inner_text, lang.to_sym).html(DEFAULT_OPTIONS)
+      html = CodeRay.scan(inner_text, lang.to_sym).html(DEFAULT_OPTIONS)
     rescue
       unless lang.blank?
         RAILS_DEFAULT_LOGGER.warn "CodeRay Error: #{$!.message}"
         RAILS_DEFAULT_LOGGER.debug $!.backtrace.join("\n")
       end
-      "<pre><code>#{CGI.escapeHTML(inner_text)}</code></pre>"
+      html = "<pre><code>#{CGI.escapeHTML(inner_text)}</code></pre>"
     end
+    "<div class=\"CodeMacro\">\n#{html}</div>\n"
   end
 end
 
