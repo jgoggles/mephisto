@@ -10,8 +10,7 @@ require 'pathname'
 $: << Pathname.glob(Pathname(__FILE__).parent.parent.parent + 'gems' + 'coderay*' + 'lib').to_s
 require 'coderay'
 
-desc 'Default: generate default_coderay.css'
-task :default => :generate_default_coderay_stylesheet
+task :default => :test
 
 # This task is useful to generate a new default CodeRay stylesheet after 
 # updating the coderay gem in 'vendor/gems' to insure that the 
