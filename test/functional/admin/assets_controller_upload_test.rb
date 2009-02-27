@@ -39,15 +39,17 @@ class Admin::AssetsControllerUploadTest < Test::Unit::TestCase
 
   def test_should_edit_asset
     login_as :quentin
-    process_upload ['logo.png']
-    get :edit, :id => Asset.find(:first).id
+    upload_file = 'logo.png'
+    process_upload [upload_file]
+    get :edit, :id => Asset.find_by_filename(upload_file).id
     assert_response :success
   end
   
   def test_should_update_asset
     login_as :quentin
-    process_upload ['logo.png']
-    post :update, :id => Asset.find(:first).id, :asset => { :title => 'foo bar' }
+    upload_file = 'logo.png'
+    process_upload [upload_file]
+    post :update, :id => Asset.find_by_filename(upload_file).id, :asset => { :title => 'foo bar' }
     assert_redirected_to assets_path
     assert_valid assigns(:asset)
     assert_equal 'foo bar', assigns(:asset).title
