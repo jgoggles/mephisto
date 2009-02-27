@@ -76,7 +76,8 @@ class MephistoController < ApplicationController
     
     def dispatch_comment
       @skip_caching = true
-      message = site.call_render(nil, :__thanks_for_comment, {}, nil, :layout => false) rescue "Thanks for the comment!"
+      approved = Comment.find_by_id(@dispatch_path.last).approved? rescue false
+      message = site.call_render(nil, :__thanks_for_comment, { 'approved' => approved }, nil, :layout => false) rescue "Thanks for the comment!"
       show_article_with 'message' => message
     end
 
