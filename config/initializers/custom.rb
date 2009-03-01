@@ -1,5 +1,5 @@
 # Set this if you're running under a sub directory
-# ActionController::AbstractRequest.relative_url_root = '/blog'
+# ActionController::Base.relative_url_root = '/blog'
 
 # If it's safe to load the application, then go ahead and configure it.
 if safe_to_load_application?
