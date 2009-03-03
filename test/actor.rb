@@ -72,6 +72,11 @@ module Mephisto
         assert_redirected_to "/admin/articles/#{assigns(:article).id}/edit"
       end
 
+      def update_site_settings(options = {})
+        post "/admin/settings/update", :site => options
+        assert_redirected_to "/admin/settings"
+      end
+
       private
         def manage_comment(action, comment)
           post "/admin/articles/#{comment.article_id}/comments/#{comment.id}/#{action}", :comment => comment.id

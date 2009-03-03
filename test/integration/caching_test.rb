@@ -425,6 +425,24 @@ class CachingTest < ActionController::IntegrationTest
     end
   end
 
+  def test_should_expire_cache_when_site_theme_changed
+    visit_sections_and_feeds_with visit_with_session
+    assert_expires_pages section_url_for(:home), section_url_for(:about), feed_url_for(:home), feed_url_for(:about) do
+      login_as :quentin do |writer|
+        writer.update_site_settings :current_theme_path => 'encytemedia'
+      end
+    end
+  end
+
+  def test_should_not_expire_cache_when_site_them_is_not_changed
+    visit_sections_and_feeds_with visit_with_session
+    assert_caches_pages section_url_for(:home), section_url_for(:about), feed_url_for(:home), feed_url_for(:about) do
+      login_as :quentin do |writer|
+        writer.update_site_settings :title => 'Foo'
+      end
+    end
+  end
+
   protected
     include Mephisto::Caching::ReferencedCachingTestHelper
   
