@@ -61,6 +61,11 @@ class Admin::CommentsControllerTest < Test::Unit::TestCase
     assert_response :success
   end
   
+  def test_should_update_comment
+    post :update, :article_id => '1', :id => '3', :comment => { :body => 'New body text' }
+    assert_response :success
+  end
+  
   def test_should_approve_comment
     contents(:welcome_comment).update_attribute(:approved, false)
     xhr :post, :approve, :article_id => '1', :id => '3'

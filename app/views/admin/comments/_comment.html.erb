@@ -1,7 +1,7 @@
 
   <li class="event-comment<%= cycle(" shade", "") %>" id="comment-<%= comment.id %>">
-    <h3><a name="comment-<%= comment.id %>"></a> <%= link_to comment.article.title, :controller => 'articles', :action => 'edit', :id => comment.article %></h3>
-    <blockquote><p>"<%= truncate strip_tags(comment.body), 255 %>"</p></blockquote>
+    <h3><a name="comment-<%= comment.id %>"></a> <%= link_to h(comment.article.title), :controller => 'articles', :action => 'edit', :id => comment.article %></h3>
+    <blockquote><p>"<%= truncate strip_tags(comment.body), :length => 255 %>"</p></blockquote>
     <span class="meta">
       <cite>&mdash; <%= author_link_for comment %><%= %( (#{comment.author_email})) unless comment.author_email.blank? %></cite>
 
