@@ -116,10 +116,11 @@ Asset = {
   addInput: function() {
     var list = $('filefields'), copyFrom = list.down(), tagsall = $('tagsall');
     var newNode = copyFrom.cloneNode(true), files = list.getElementsByTagName('li');
-    var close = document.getElementsByClassName('remove-file', newNode)[0]; 
-    Element.remove(document.getElementsByClassName('tagsall', newNode)[0]);
+    var close = newNode.down('.remove-file');
+    newNode.down('.tagsall').remove();
+    newNode.down('input').clear();
     Event.observe(close, 'click', function(e) { 
-      Event.findElement(e, 'li').remove(); 
+      this.up('li').remove(); 
       if(tagsall.visible() && files.length == 1) tagsall.hide();
     });
     close.show();
