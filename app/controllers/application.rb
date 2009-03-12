@@ -14,8 +14,7 @@ class ApplicationController < ActionController::Base
     klass.auto_include!
   end
   
-  filter_parameter_logging "password"
-  filter_parameter_logging "token"
+  filter_parameter_logging :password, :token
   
   protected
     helper_method :admin?
