@@ -5,8 +5,8 @@
 	<span>Test</span>
 	<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
 	<fb:login-button onlogin="facebook_init();"></fb:login-button>
-	<fb:name uid="1015391854 " ></fb:name>
-	<fb:profile-pic uid="1015391854 " facebook-logo="true" size="thumb" ></fb:profile-pic>
+	<fb:name uid="1015391854" ></fb:name>
+	<fb:profile-pic uid="1015391854" facebook-logo="true" size="thumb" ></fb:profile-pic>
 	<script type="text/javascript">
 	FB_RequireFeatures(["Api"], function(){ 
 		// Create an ApiClient object, passing app's API key and 
@@ -14,6 +14,13 @@
 		FB.init("a993b3c318314ae985788373988c52aa", "/connect/xd_receiver.htm");
 		
 		var api = FB.Facebook.apiClient; 
+		
+		if(api.get_session() != null) {
+			alert('user is logged in'); 
+		} else {
+			alert('user is NOT logged in');
+		}
+		
 		
 		api.requireLogin(function(exception){ 
 			FB.FBDebug.logLevel=1; 
@@ -24,7 +31,7 @@
 		    // Debug.dump(result, 'friendsResult from non-batch execution '); 
 			// }); 
 			api.friends_get(new Array(), function(result, exception){ 
-				FB.FBDebug.dump(result, 'friendsResult from non-batch execution '); 
+				//FB.FBDebug.dump(result, 'friendsResult from non-batch execution '); 
 			}); 
 		}); 
 		//alert('finished');
