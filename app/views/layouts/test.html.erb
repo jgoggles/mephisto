@@ -4,11 +4,31 @@
 <body>
 	<span>Test</span>
 	<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
-	<fb:login-button></fb:login-button>
-	<fb:name uid="2901279" ></fb:name>
-	<fb:profile-pic uid="2901279" facebook-logo="true" size="thumb" ></fb:profile-pic>
+	<fb:login-button onlogin="facebook_init();"></fb:login-button>
+	<fb:name uid="1015391854 " ></fb:name>
+	<fb:profile-pic uid="1015391854 " facebook-logo="true" size="thumb" ></fb:profile-pic>
 	<script type="text/javascript">
+	FB_RequireFeatures(["Api"], function(){ 
+		// Create an ApiClient object, passing app's API key and 
+		// a site relative URL to xd_receiver.htm 
 		FB.init("a993b3c318314ae985788373988c52aa", "/connect/xd_receiver.htm");
+		
+		var api = FB.Facebook.apiClient; 
+		
+		api.requireLogin(function(exception){ 
+			FB.FBDebug.logLevel=1; 
+			FB.FBDebug.dump("Current user id is " + api.get_session().uid); 
+			// Get friends list 
+			//5-14-09: this code below is broken, correct code follows 
+			//api.friends_get(null, function(result){ 
+		    // Debug.dump(result, 'friendsResult from non-batch execution '); 
+			// }); 
+			api.friends_get(new Array(), function(result, exception){ 
+				FB.FBDebug.dump(result, 'friendsResult from non-batch execution '); 
+			}); 
+		}); 
+		//alert('finished');
+	});
 	</script>
 </body>
 </html>
