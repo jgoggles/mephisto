@@ -1,0 +1,4 @@
+Application Name: Test Mephisto FBConnect
+Application ID	121045817134
+API Key	a993b3c318314ae985788373988c52aa	
+Secret	88cb2879f74cad662ad321705f7bbebd
