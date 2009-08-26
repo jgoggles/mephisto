@@ -1,0 +1,8 @@
+<h2>Past Articles</h2>
+
+{% for article in articles %}
+		{% ifchanged %}
+			<h3>{{ article.published_at | date:"%B %Y" }}</h3>
+		{% endifchanged %}
+		<li>{{ article | link_to_article }}</li>
+	{% endfor %}
