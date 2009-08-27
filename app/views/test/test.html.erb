@@ -1,2 +1,22 @@
-<h1>Test#test</h1>
-<p>Find me in app/views/test/test.html.erb</p>
+<%= javascript_include_tag 'mephisto/fbComments' %>
+
+	<div id="fbCommentingWrapper" style="width: 300px;">
+		<h2>Commenting Options</h2>
+		<div id="fblogin" style="display:none;">			
+			<p>Enter your personal information to the left, 
+			or sign in with your facebook account by clicking the button below</p>
+			<fb:login-button onlogin="fbLoginReady();"></fb:login-button>
+		</div>
+		<div id="fbinfo" style="display:none;">
+			<div id="fbprofile-pic" uid="" facebook-logo="true" size="thumb" style="float:left; margin-right:10px;"></div>
+			<p style="">Hello, <span id="fbname" uid="" useyou="false"></span>. You are signed in with your Facebook account.
+			</p>
+			<div style="clear:left;"></div>
+			<a href="#" onclick="FB.Connect.logout(function() { $('fblogin').show(); $('fbinfo').hide(); }); return false;" >Click here to sign out.</a>
+		</div>
+	</div>
+
+	<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
+	<script type="text/javascript">
+		initComments();
+	</script>
