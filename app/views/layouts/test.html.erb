@@ -1,42 +1,47 @@
 <html xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
+	<%= javascript_include_tag 'mephisto/prototype.js' %>
 </head>
 <body>
 	<span>Test</span>
+	
+		<script type="text/javascript">
+
+		</script>
+
+
+	<fb:login-button></fb:login-button>
+	<%= content_tag 'div','', { :id => 'fbname', :uid => '', :useyou => 'false' } %>
+    <%= content_tag 'div', '', { :id => 'fbprofile', :uid => '', 'facebook-logo' => 'true', :size => :thumb } %>
+<a href="#" onclick="FB.Connect.logout(function() { FB.XFBML.Host.parseDomTree(); }); return false;" ><img id="fb_logout_image" src="http://static.ak.fbcdn.net/images/fbconnect/logout-buttons/logout_small.gif" alt="Connect"/></a>
 	<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
-	<fb:login-button onlogin="facebook_init();"></fb:login-button>
-	<fb:name uid="1015391854" ></fb:name>
-	<fb:profile-pic uid="1015391854" facebook-logo="true" size="thumb" ></fb:profile-pic>
 	<script type="text/javascript">
-	FB_RequireFeatures(["Api"], function(){ 
+			FB_RequireFeatures(["Connect"], function(){ 
 		// Create an ApiClient object, passing app's API key and 
 		// a site relative URL to xd_receiver.htm 
 		FB.init("a993b3c318314ae985788373988c52aa", "/connect/xd_receiver.htm");
 		
 		var api = FB.Facebook.apiClient; 
-		
+		FB.Connect.requireSession();
 		if(api.get_session() != null) {
-			alert('user is logged in'); 
+			FB.XFBML.Host.autoParseDomTree = false;
+			var uid = api.get_session().uid;
+			$('fbname').writeAttribute('uid', uid);
+			$('fbprofile').writeAttribute('uid', uid);
+			var fbname = new FB.XFBML.Name($('fbname'));
+			var profilePic = new FB.XFBML.ProfilePic($('fbprofile'));
+			FB.XFBML.Host.addElement(fbname);
+			FB.XFBML.Host.addElement(profilePic);
+			FB.XFBML.Host.parseDomTree();
 		} else {
 			alert('user is NOT logged in');
 		}
 		
 		
-		api.requireLogin(function(exception){ 
-			FB.FBDebug.logLevel=1; 
-			FB.FBDebug.dump("Current user id is " + api.get_session().uid); 
-			// Get friends list 
-			//5-14-09: this code below is broken, correct code follows 
-			//api.friends_get(null, function(result){ 
-		    // Debug.dump(result, 'friendsResult from non-batch execution '); 
-			// }); 
-			api.friends_get(new Array(), function(result, exception){ 
-				//FB.FBDebug.dump(result, 'friendsResult from non-batch execution '); 
-			}); 
-		}); 
-		//alert('finished');
+
 	});
 	</script>
+	
 </body>
 </html>
 
