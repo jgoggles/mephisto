@@ -1,4 +1,5 @@
 var api = null;
+var guid = null;
 
 function initComments() {
     FB_RequireFeatures(["Connect"],
@@ -12,6 +13,7 @@ function initComments() {
         if (api.get_session() != null) {
             FB.XFBML.Host.autoParseDomTree = false;
             var uid = api.get_session().uid;
+						guid = uid;
             setAndCreateFBElements(uid);
             $('fbinfo').show();
         } else {
@@ -47,4 +49,9 @@ function populateAuthor(uid) {
         var userName = result[0]['name'];
 				$('comment_author').writeAttribute('value', userName);
     });
+}
+
+function streamPost() {
+
+	FB.Connect.streamPublish('abc');
 }
