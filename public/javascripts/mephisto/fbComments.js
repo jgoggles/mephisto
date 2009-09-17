@@ -13,8 +13,8 @@ function initComments() {
         if (api.get_session() != null) {
             FB.XFBML.Host.autoParseDomTree = false;
             var uid = api.get_session().uid;
-	    guid = uid;
-    	    setUserData(uid);
+            guid = uid;
+            setUserData(uid);
             setAndCreateFBElements(uid);
             $('fbinfo').show();
         } else {
@@ -26,12 +26,13 @@ function initComments() {
 function setAndCreateFBElements(uid) {
     $('fbname').writeAttribute('uid', uid);
     $('fbprofile-pic').writeAttribute('uid', uid);
-		populateAuthor(uid);
+    populateAuthor(uid);
     var fbname = new FB.XFBML.Name($('fbname'));
     var profilePic = new FB.XFBML.ProfilePic($('fbprofile-pic'));
     FB.XFBML.Host.addElement(fbname);
     FB.XFBML.Host.addElement(profilePic);
     FB.XFBML.Host.parseDomTree();
+		$('comment-form').writeAttribute('onSubmit', 'return streamPost(this.comment.value)');
 }
 
 function fbLoginReady() {
@@ -49,36 +50,53 @@ function populateAuthor(uid) {
     FB.Facebook.apiClient.fql_query(sql,
     function(result, ex) {
         var userName = result[0]['name'];
-	$('comment_author').writeAttribute('value', userName);
+        $('comment_author').writeAttribute('value', userName);
     });
 }
 
 
-function streamPost2() {
-	// var attachment = {'name':'Google','href':'http://www.google.com/','description':'Google Home Page'};
-	// FB.Connect.streamPublish('abc', attachment);
-	var template_data = {"site":"<a href='http://espn.com'>test</a>"};
-	FB.Connect.showFeedDialog(
-	    124774407134, 
-			template_data
-	);
-	
+function streamPost(comment) {
+    var template_data = {
+        "site": "<a href='http://espn.com'>test</a>"
+    };
+		
+    FB.Connect.showFeedDialog(
+    124774407134,
+    template_data,
+		null, null, null, FB.RequireConnect.require, submitComment, "fu", 
+		comment
+    );
+		return false;
+}
+
 function setUserData(uid) {
-   var sql = "SELECT first_name FROM user WHERE uid =" + uid;
+    var sql = "SELECT first_name FROM user WHERE uid =" + uid;
     FB.Facebook.apiClient.fql_query(sql,
     function(result, ex) {
-        user_data['first_name'] = result[0]['first_name'];	
+        user_data['first_name'] = result[0]['first_name'];
     });
 }
 
 function streamPublish() {
-    var attachments = { 'name':'Blog Post Name Here',
-			'href':'http://www.google.com',
-			'caption': user_data['first_name'] + ' commented on this post',
-			'description':'This will be the first however many words of the article...',
-			'properties':{'site':{'text':'TechCrunch','href':'http://www.techcrunch.com'}}};
-    FB.Connect.streamPublish('abc',attachments,'','','Your comment');
+    var attachments = {
+        'name': 'Blog Post Name Here',
+        'href': 'http://www.google.com',
+        'caption': user_data['first_name'] + ' commented on this post',
+        'description': 'This will be the first however many words of the article...',
+        'properties': {
+            'site': {
+                'text': 'TechCrunch',
+                'href': 'http://www.techcrunch.com'
+            }
+        }
+    };
+    FB.Connect.streamPublish('abc', attachments, '', '', 'Your comment');
 }
+
+function submitComment() {
+
+}
+
 
 
 
