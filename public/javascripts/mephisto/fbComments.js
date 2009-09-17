@@ -51,7 +51,7 @@ function populateAuthor(uid) {
     });
 }
 
-function streamPost() {
+function streamPost2() {
 	// var attachment = {'name':'Google','href':'http://www.google.com/','description':'Google Home Page'};
 	// FB.Connect.streamPublish('abc', attachment);
 	var template_data = {"site":"<a href='http://espn.com'>test</a>"};
