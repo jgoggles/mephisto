@@ -69,18 +69,21 @@ function populateAuthor(uid) {
     });
 }
 
-
 function streamPost(comment) {
+		var site_url = location.protocol + '//' + location.host;
+		var post_title = $$('div.entrytitle')[0].childElements()[0].childElements()[0].innerHTML;
+		var body = $$('div.entrybody')[0].childElements()[0].innerHTML;
+		var new_body = snippet(body, 75, "...");
     var template_data = {
-        "site": "", 
-				"post_title" : "",
-				"body" : ""
+        "site": "<a href=#{site_url}>here we go</a>".interpolate({site_url: site_url}), 
+				"post_title" : "<a href=#{href}>#{post_title}</a>".interpolate({post_title: post_title, href: location.href}),
+				"body" : new_body
     };
 
     FB.Connect.showFeedDialog(
-    133086287134,
+    133089962134,
     template_data,
-    null, null, null, FB.RequireConnect.require, submitComment, "fu",
+    null, null, null, FB.RequireConnect.require, submitComment, "Your comment:",
     comment
     );
     return false;
@@ -122,6 +125,17 @@ function afterLogout() {
         $(s).writeAttribute('type', 'input');
         $(s).siblings()[0].show();
     });
+}
+
+function snippet(text, wordcount, omission) {
+	var temp = new Array();
+	temp = text.split(" ");
+	var snip = '';
+	for (var i = 0; i < wordcount; i++) {
+		snip += temp[i] + " ";
+	}
+	snip = snip.replace(/\s+$/, '');
+	return snip + (temp.length > wordcount ? omission : "");
 }
 
 
