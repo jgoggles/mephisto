@@ -1,6 +1,7 @@
 var api = null;
 var guid = null;
 var user_data = new Array();
+var submit_action = null;
 
 function initComments() {
     FB_RequireFeatures(["Connect"],
@@ -32,6 +33,9 @@ function setAndCreateFBElements(uid) {
     FB.XFBML.Host.addElement(fbname);
     FB.XFBML.Host.addElement(profilePic);
     FB.XFBML.Host.parseDomTree();
+    $('comment-form').writeAttribute('name', 'commentform');
+    $('submit').writeAttribute('name', 'submit2');
+    $('submit').writeAttribute('id', 'submit2');
 		$('comment-form').writeAttribute('onSubmit', 'return streamPost(this.comment.value)');
 }
 
@@ -94,7 +98,7 @@ function streamPublish() {
 }
 
 function submitComment() {
-
+  document.commentform.submit();
 }
 
 
