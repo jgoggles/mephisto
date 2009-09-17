@@ -1,7 +1,7 @@
 <script src="/javascripts/mephisto/prototype.js" type="text/javascript"></script>
 <script src="/javascripts/mephisto/fbComments.js" type="text/javascript"></script>
 	<div id="fbCommentingWrapper" style="width: 300px;">
-		<h2>Commenting Options</h2>
+		<h2 id="commentingOptions">Commenting Options</h2>
 		<div id="fblogin" style="display:none;">			
 			<p>Enter your personal information to the left, 
 			or sign in with your facebook account by clicking the button below</p>
@@ -12,7 +12,7 @@
 			<p style="">Hello, <span id="fbname" uid="" useyou="false"></span>. You are signed in with your Facebook account.
 			</p>
 			<div style="clear:left;"></div>
-			<a href="#" onclick="FB.Connect.logout(function() { $('fblogin').show(); $('fbinfo').hide(); }); return false;" >Click here to sign out.</a>
+			<a href="#" onclick="FB.Connect.logout(afterLogout); return false;" >Click here to sign out.</a>
 		</div>
 	</div>
 
