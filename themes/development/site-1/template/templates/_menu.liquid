@@ -1,0 +1,32 @@
+<div id ="menu">
+
+{% case section.path %}
+
+{% when 'topics' %}
+<a href="/">Home</a>
+<a href="/topics" class="selected"> Articles by Topic</a>
+<a href="/newsletter">Newsletter</a>
+<a href="/sections">Sections</a>
+
+{% when 'newsletter' %}
+<a href="/">Home</a>
+<a href="/topics"> Articles by Topic</a>
+<a href="/newsletter" class="selected">Newsletter</a>
+<a href="/sections">Sections</a>
+
+{% when 'sections' %}
+<a href="/">Home</a>
+<a href="/topics"> Articles by Topic</a>
+<a href="/newsletter" >Newsletter</a>
+<a href="/sections" class="selected">Sections</a>
+
+{% else %}
+
+<a href="/">Home</a>
+<a href="/topics"> Articles by Topic</a>
+<a href="/newsletter">Newsletter</a>
+<a href="/sections">Sections</a>
+
+{% endcase %}
+
+</div><!--menu-->

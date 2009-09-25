@@ -1,0 +1,24 @@
+{% if mode == 'single' %}
+{% include 'article_rdf' %}
+{% endif %}
+
+<div class="hentry" id="article-{{ article.id }}">
+<div id="article_header">
+<div id ="article_header_inner">
+  <h2 id="entry-title" class="entry-title">
+    {{ article.title }} 
+  </h2>
+  {% include 'article_author' %}
+</div> <!--article_header_inner-->
+{% include 'tweetmeme_button' %}
+<div style="clear:both;"></div>
+</div> <!--article_header-->
+
+  {% include 'article_content' %}
+  {% include 'article_meta' %}
+
+</div><!--hentry-->
+
+{% if mode == 'single' %}
+{% include 'article_comments' %}
+{% endif %}

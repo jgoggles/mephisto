@@ -1,0 +1,11 @@
+<div id ="widget_latest_articles" class="widget">
+
+<h3>Latest Articles</h3>
+
+<ul class="dates">
+{% for article in site.latest_articles %}
+            <li><a href="{{ article.url }}"><span class="date">{{ article.published_at | strftime: '%m.%y' }}</span> {{ article.title }}</a></li>
+{% endfor %}
+         </ul>
+
+</div>

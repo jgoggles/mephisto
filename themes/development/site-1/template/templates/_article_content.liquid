@@ -1,0 +1,16 @@
+{% if article.assets.size != 0 %}
+  {% for asset in article.assets %}
+    {% if asset.is_image %}
+      <a href="{{ article.url }}"><img src="{{ asset.path }}" alt="alt" /></a>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+<div id="entry-content" class="entry-content">
+  {{ article.content }}
+  {% if article.excerpt %}
+  <div class="extended">
+    <p>{{ article | link_to_article: "Continue reading..." }}</p>
+  </div>
+  {% endif %}
+</div>

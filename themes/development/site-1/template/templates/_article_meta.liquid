@@ -1,0 +1,32 @@
+<div id ="meta">
+
+<div id="meta_inner">
+
+
+<ul class="meta">
+{% if article.tags.size > 0 %} 
+ <li>
+    Tags: {% for tag in article.tags %}{{ tag | link_to_tag }}&nbsp;{% endfor %}
+  </li>
+  {% endif %}
+  <li>
+    Meta: 
+    {% if article.comments_count > 0 %}
+    {{ article.comments_count }}
+    {{ article | link_to_comments:"Responses" }}, 
+    {% endif %}
+    <a href="{{ article.url }}" rel="bookmark">bookmark</a>
+    {% comment %} <!-- There's currently no per-article syndication feed for Mephisto --> , syndicate {% endcomment %}
+  </li>
+
+<li>
+Updated:<abbr class="updated" title="{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S+00:00' }}">{{ article.updated_at | date: '%B %d, %Y at %I:%M %p MST' }}</abbr>
+</li>
+<li>
+Comments:<a href="#comment-form">Leave a response</a>
+</li>
+</ul>
+</div><!--meta_inner-->
+
+<div style="clear:both;"></div>
+</div><!--meta-->

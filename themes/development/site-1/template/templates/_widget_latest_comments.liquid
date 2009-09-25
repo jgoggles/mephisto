@@ -1,0 +1,9 @@
+<div id ="widget_latest_comments" class="widget">
+
+<h3>Latest Comments</h3>
+
+{% for comment in site.latest_comments %}
+		    <li>{{ comment.author_link }} on <a href="{{ comment.url }}#comment-{{ comment.id }}">{{ comment.title }}</a></li>
+		  {% endfor %}
+
+</div>

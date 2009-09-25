@@ -1,0 +1,28 @@
+<div id ="widget_featured_articles" class="widget">
+
+<h3>Related Articles</h3>
+
+{{ 'widget_featured_articles' | section.name | assign_to: 'var_widget_section' }} 
+
+{% for article in var_widget_section.latest_articles%} 
+
+      <a class="widget_article_preview" href="{{ article.url }}">
+
+         {% if article.assets.size != 0 %}
+            {% for asset in article.assets %}
+                {% if asset.is_image %}
+                  <img class ="article_section" src="{{ asset.path }}" alt="alt" />
+                {% endif %}
+            {% endfor %}
+         {% endif %}
+
+<span class="widget_article_title">{{ article.title }}</span>
+
+   {{ article.body | truncate: 120 }}
+
+        </a><!--article preview-->
+ {% endfor %}
+
+<div style="clear:both;"></div>
+
+</div><!--widget_featured_articles-->

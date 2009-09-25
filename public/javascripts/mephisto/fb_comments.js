@@ -1,14 +1,22 @@
+// Configuration - This is filled out by the rake task or you can manually edit it.
+// var api_key = "<api_key>";
+// var template_id = "<template_id>";
+// var site_name = "<site_name>";
+var api_key = "a993b3c318314ae985788373988c52aa";
+var template_id = "133120167134";
+var site_name = "Super Master";
+
+// Global variables
 var api = null;
 var guid = null;
 var user_data = new Array();
-var submit_action = null;
 
 function initComments() {
     FB_RequireFeatures(["Connect"],
     function() {
         // Create an ApiClient object, passing app's API key and
         // a site relative URL to xd_receiver.htm
-        FB.init("a993b3c318314ae985788373988c52aa", "/connect/xd_receiver.htm");
+        FB.init(api_key, "/xd_receiver.htm");
 
         api = FB.Facebook.apiClient;
         if (api.get_session() != null) {
@@ -36,7 +44,7 @@ function setAndCreateFBElements(uid) {
         $('comment-form').writeAttribute('name', 'commentform');
         $('submit').writeAttribute('name', 'submit2');
         $('submit').writeAttribute('id', 'submit2');
-        $('comment-form').writeAttribute('onSubmit', 'return streamPost(this.comment.value)');
+        $('comment-form').writeAttribute('onSubmit', 'return streamPost(this.comment_body.value)');
     } else {
 				$('commentingOptions').hide();
 		}
@@ -71,17 +79,16 @@ function populateAuthor(uid) {
 
 function streamPost(comment) {
 		var site_url = location.protocol + '//' + location.host;
-		var post_title = $$('div.entrytitle')[0].childElements()[0].childElements()[0].innerHTML;
-		var body = $$('div.entrybody')[0].childElements()[0].innerHTML;
-		var new_body = snippet(body, 75, "...");
+		var post_title = $('entry-title').innerHTML;
+		var body = $('entry-content').childElements()[0].innerHTML;
     var template_data = {
-        "site": "<a href=#{site_url}>here we go</a>".interpolate({site_url: site_url}), 
+        "site": "<a href=#{site_url}>#{site_name}</a>".interpolate({site_url: site_url, site_name: site_name}), 
 				"post_title" : "<a href=#{href}>#{post_title}</a>".interpolate({post_title: post_title, href: location.href}),
-				"body" : new_body
+				"body" : body
     };
 
     FB.Connect.showFeedDialog(
-    133089962134,
+    template_id,
     template_data,
     null, null, null, FB.RequireConnect.require, submitComment, "Your comment:",
     comment
@@ -97,22 +104,6 @@ function setUserData(uid) {
     });
 }
 
-function streamPublish() {
-    var attachments = {
-        'name': 'Blog Post Name Here',
-        'href': 'http://www.google.com',
-        'caption': user_data['first_name'] + ' commented on this post',
-        'description': 'This will be the first however many words of the article...',
-        'properties': {
-            'site': {
-                'text': 'TechCrunch',
-                'href': 'http://www.techcrunch.com'
-            }
-        }
-    };
-    FB.Connect.streamPublish('abc', attachments, '', '', 'Your comment');
-}
-
 function submitComment() {
     document.commentform.submit();
 }
@@ -125,22 +116,5 @@ function afterLogout() {
         $(s).writeAttribute('type', 'input');
         $(s).siblings()[0].show();
     });
+
 }
-
-function snippet(text, wordcount, omission) {
-	var temp = new Array();
-	temp = text.split(" ");
-	var snip = '';
-	for (var i = 0; i < wordcount; i++) {
-		snip += temp[i] + " ";
-	}
-	snip = snip.replace(/\s+$/, '');
-	return snip + (temp.length > wordcount ? omission : "");
-}
-
-
-
-
-
-
-
